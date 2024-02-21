@@ -18,6 +18,7 @@ class State(BaseModel):
     amenity_ids = []"""
 
     def __init__(self, *args, **kwargs):
+        params = {}
         if kwargs:
             self.__dict__.update(kwargs)
         super().__init__()
