@@ -127,17 +127,13 @@ class HBNBCommand(cmd.Cmd):
         for arg in args[1:]:
             key, value = arg.split('=', 1)
             if value[0] == value[-1] == '"':
-                if type(value) == str:
-                    value = value[1:-1].replace('\\"', '"')
-                    value = value.replace("_", " ")
-                elif type(value) == int or type(value) == float:
-                    if '.' in value:
-                        value = float(value)
-                    else:
-                        value = int(value)
-                else:
-                    continue
-                params[key] = value
+                value = value[1:-1].replace('"', '\"')
+                value = value.replace("_", " ")
+            if '.' in value:
+                value = float(value)
+            else:
+                value = int(value)
+            params[key] = value
         new_args = tuple(params.values())
         new_instance = HBNBCommand.classes[class_name](*new_args)
         storage.save()
