@@ -5,10 +5,7 @@ from models.base_model import BaseModel
 
 class User(BaseModel):
     """This class defines a user by various attributes"""
-    email = ''
-    password = ''
-    first_name = ''
-    last_name = ''
     def __init__(self, *args, **kwargs):
-        self.__dict__.update(kwargs)
+        if kwargs:
+            self.__dict__.update(kwargs)
         super().__init__()

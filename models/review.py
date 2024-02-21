@@ -5,9 +5,7 @@ from models.base_model import BaseModel
 
 class Review(BaseModel):
     """ Review classto store review information """
-    place_id = ""
-    user_id = ""
-    text = ""
     def __init__(self, *args, **kwargs):
-        self.__dict__.update(kwargs)
+        if kwargs:
+            self.__dict__.update(kwargs)
         super().__init__()
