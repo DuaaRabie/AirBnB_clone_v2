@@ -9,3 +9,6 @@ class User(BaseModel):
     password = ''
     first_name = ''
     last_name = ''
+    def __init__(self, *args, **kwargs):
+        self.__dict__.update(kwargs)
+        super().__init__()
