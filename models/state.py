@@ -4,7 +4,7 @@ from models.base_model import BaseModel
 
 
 class State(BaseModel):
-    """ State class """
+    """ State class 
     city_id = ""
     user_id = ""
     name = ""
@@ -15,12 +15,9 @@ class State(BaseModel):
     price_by_night = 0
     latitude = 0.0
     longitude = 0.0
-    amenity_ids = []
+    amenity_ids = []"""
 
     def __init__(self, *args, **kwargs):
-        params = {}
-        for key, val in enumerate(kwargs):
-            if key in self.__dict__:
-                params[key] = val
-        self.__dict__.update(params)
+        if kwargs:
+            self.__dict__.update(params)
         super().__init__()
