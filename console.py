@@ -136,7 +136,7 @@ class HBNBCommand(cmd.Cmd):
                     else:
                         value = int(value)
                 else:
-                    pass
+                    continue
                 params[key] = value
         new_args = tuple(params.values())
         new_instance = HBNBCommand.classes[class_name](*new_args)
