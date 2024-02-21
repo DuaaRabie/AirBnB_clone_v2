@@ -5,9 +5,7 @@ from models.base_model import BaseModel
 
 class State(BaseModel):
     """ State class """
-    name = ""
     def __init__(self, *args, **kwargs):
-        if args:
-            name = args[0]
-            new_args = args[1:]
-            super().__init__(*args)
+        self.name = ""
+        self.__dict__.update(kwargs)
+        super().__init__()

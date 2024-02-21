@@ -134,8 +134,7 @@ class HBNBCommand(cmd.Cmd):
             else:
                 value = int(value)
             params[key] = value
-        new_args = tuple(params.values())
-        new_instance = HBNBCommand.classes[class_name](*new_args)
+        new_instance = HBNBCommand.classes[class_name](**params)
         storage.save()
         print(new_instance.id)
         storage.save()
