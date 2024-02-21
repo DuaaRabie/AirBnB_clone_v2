@@ -19,5 +19,5 @@ class State(BaseModel):
 
     def __init__(self, *args, **kwargs):
         if kwargs:
-            self.__dict__.update(params)
+            self.__dict__.update(kwargs)
         super().__init__()
