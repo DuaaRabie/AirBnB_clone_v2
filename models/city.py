@@ -5,5 +5,7 @@ from models.base_model import BaseModel
 
 class City(BaseModel):
     """ The city class, contains state ID and name """
-    state_id = ""
-    name = ""
+    def __init__(self, *arg, **kwargs):
+        if kwargs:
+            self.__dict__.update(kwargs)
+        super().__init__()

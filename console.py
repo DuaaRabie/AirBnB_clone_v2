@@ -225,13 +225,14 @@ class HBNBCommand(cmd.Cmd):
             for k, v in storage._FileStorage__objects.items():
                 print_list.append(str(v))
         
-        print("[", end='')
-        for index, val in enumerate(print_list):
-            print(val, end='')
-            if index < len(print_list) - 1:
-                print(", ", end='')
-            else:
-                print("]")
+        if print_list:
+            print("[", end='')
+            for index, val in enumerate(print_list):
+                print(val, end='')
+                if index < len(print_list) - 1:
+                    print(", ", end='')
+                else:
+                    print("]")
 
     def help_all(self):
         """ Help information for the all command """
