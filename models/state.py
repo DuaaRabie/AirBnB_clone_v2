@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 """ State Module for HBNB project """
 from models.base_model import BaseModel
-
+from sqlalchemy import Column, String, ForeignKey
+from sqlalchemy.orm import relationship
 
 class State(BaseModel):
     """ State class 
@@ -16,6 +17,9 @@ class State(BaseModel):
     latitude = 0.0
     longitude = 0.0
     amenity_ids = []"""
+    __tablename__ = "states"
+    name = Column(String(128), nullable=False)
+    cities = relationship("City", backref="state", cascade="all, delete-orphan")
 
     def __init__(self, *args, **kwargs):
         params = {}
