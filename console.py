@@ -134,9 +134,12 @@ class HBNBCommand(cmd.Cmd):
             else:
                 value = int(value)
             params[key] = value
-        new_instance = HBNBCommand.classes[class_name](**params)
-        new_instance.save()
-        print(new_instance.id)
+        try:
+            new_instance = HBNBCommand.classes[class_name](**params)
+            new_instance.save()
+            print(new_instance.id)
+        except Exception as e:
+            print("** Error: {}".format(str(e)))
 
     def help_create(self):
         """ Help information for the create method """
