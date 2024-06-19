@@ -6,6 +6,8 @@ from sqlalchemy.ext.declarative import declarative_base
 import os
 
 
+Base = declarative_base()
+
 class DBStorage:
     """ DBStorage"""
     __engine = None
@@ -13,17 +15,27 @@ class DBStorage:
 
     def __init__(self):
         """Initialize the engine and session"""
-        self.__engine = create_engine('mysql+mysqldb://hbnb_dev:hbnb_dev_pwd@localhost:3306/hbnb_dev_db', pool_pre_ping=True)
+        self.__engine = self._get_engine()
         self.__session = scoped_session(sessionmaker(bind=self.__engine, expire_on_commit=False))
-        user = os.getenv('HBNB_MYSQL_USER')
-        pwd = os.getenv('HBNB_MYSQL_PWD')
-        host = os.getenv('HBNB_MYSQL_HOST')
-        db = os.getenv('HBNB_MYSQL_DB')
 
-        if os.getenv('HBNB_ENV') == "test":
-            Base.metadata.drop_all(engine)
+    def _get_engine(self):
+        """ Create the engine linked to the MySQL database """
+        user = os.getenv('HBNB_MYSQL_USER', 'hbnb_dev')
+        pwd = os.getenv('HBNB_MYSQL_PWD', '')
+        host = os.getenv('HBNB_MYSQL_HOST', 'localhost')
+        db = os.getenv('HBNB_MYSQL_DB', 'hbnb_dev_db')
 
-        Base.metadata.create_all(engine)
+        dialect = 'mysql'
+        driver = 'mysqldb'
+        options = {'pool_pre_ping': True}
+
+        if os.getenv('HBNB_ENV', '') == 'test':
+            options['drop_all'] = True
+
+        engine = create_engine(
+                f'{dialect}+{driver}://{user}:{pwd}@{host}/{name}',
+                echo=True, **options)
+        return engine
 
     def all(self, cls=None):
         """ This function query on the current db session """
