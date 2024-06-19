@@ -51,11 +51,15 @@ class BaseModel:
                           (str(type(self)).split('.')[-1]).split('\'')[0]})
         dictionary['created_at'] = self.created_at.isoformat()
         dictionary['updated_at'] = self.updated_at.isoformat()
-        """ if dictionary[_sa_instance_state]: del _sa_instance_state """
+        
         for attr, value in dictionary.items():
             if isinstance(value, datetime):
                 dictinary[attr] = value.isoformat()
         dictionary.pop('_sa_instance_state', None)
+        
+        """ added for task 6 """
+        if '_sa_instance_state' in dictionary:
+            del dictionary['_sa_instance_state']
 
         return dictionary
 
