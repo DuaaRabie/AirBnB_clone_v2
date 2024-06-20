@@ -1,11 +1,14 @@
 #!/usr/bin/python3
 """ State Module for HBNB project """
-from models.base_model import BaseModel
-from sqlalchemy import Column, String, ForeignKey
+from sqlalchemy import Column, String, ForeignKey, Integer
 from sqlalchemy.orm import relationship
+from sqlalchemy.ext.declarative import declarative_base
+from models.base_model import BaseModel
 
 
-class State(BaseModel):
+Base = declarative_base()
+
+class State(BaseModel, Base):
     """ State class 
     city_id = ""
     user_id = ""
@@ -19,8 +22,9 @@ class State(BaseModel):
     longitude = 0.0
     amenity_ids = []"""
     __tablename__ = "states"
+    id = Column(Integer, primary_key=True)
     name = Column(String(128), nullable=False)
-    cities = relationship("City", backref="state", cascade="all, delete-orphan")
+    """cities = relationship("City", backref="state", cascade="all, delete-orphan")"""
 
     def __init__(self, *args, **kwargs):
         params = {}

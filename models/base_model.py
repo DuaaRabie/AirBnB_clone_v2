@@ -58,7 +58,7 @@ class BaseModel:
         dictionary.pop('_sa_instance_state', None)
         
         """ added for task 6 """
-        if '_sa_instance_state' in dictionary:
+        if "_sa_instance_state" in dictionary:
             del dictionary['_sa_instance_state']
 
         return dictionary
