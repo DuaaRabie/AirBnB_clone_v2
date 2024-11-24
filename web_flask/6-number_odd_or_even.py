@@ -51,7 +51,7 @@ def number_template(n):
 def odd_or_even(n):
     try:
         int(n)
-        if n % 2 == 0:
+        if int(n) % 2 == 0:
             condition = "even"
         else:
             condition = "odd"
