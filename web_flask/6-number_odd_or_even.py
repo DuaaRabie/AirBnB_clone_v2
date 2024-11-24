@@ -48,11 +48,11 @@ def number_template(n):
 
 
 @app.route('/number_odd_or_even/<n>', strict_slashes=False)
-def odd_or_even():
+def odd_or_even(n):
     try:
         int(n)
         return render_template(
-                "6-number_odd_or_even.html", n=n)
+            "6-number_odd_or_even.html", n=n)
     except ValueError:
         return "Not a number", 404
 
