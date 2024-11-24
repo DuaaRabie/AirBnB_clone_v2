@@ -51,8 +51,13 @@ def number_template(n):
 def odd_or_even(n):
     try:
         int(n)
+        if n % 2 == 0:
+            condition = "even"
+        else:
+            condition = "odd"
+
         return render_template(
-            "6-number_odd_or_even.html", n=n)
+            "6-number_odd_or_even.html", n=n, condition=condition)
     except ValueError:
         return "Not a number", 404
 
