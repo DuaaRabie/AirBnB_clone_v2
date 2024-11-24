@@ -24,7 +24,7 @@ def c_route(text):
 
 @app.route('/python/<text>', strict_slashes=False)
 def python_route(text="is cool"):
-    return f"Python {escape(text.replace('_', ' '))}"
+    return f"Python {text.replace('_', ' ')}"
 
 
 if __name__ == '__main__':
