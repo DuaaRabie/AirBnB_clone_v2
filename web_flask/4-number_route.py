@@ -35,7 +35,7 @@ def number(n):
         int(n)
         return f"{n} is a number"
     except ValueError:
-        return "Not a number", 400
+        return "Not a number", 404
 
 
 if __name__ == '__main__':
