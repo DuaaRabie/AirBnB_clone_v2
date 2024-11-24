@@ -42,7 +42,7 @@ def number(n):
 def number_template(n):
     try:
         int(n)
-        return render_template(5-number.html, n=n)
+        return render_template("5-number.html", n=n)
     except ValueError:
         return "Not a number", 404
 
