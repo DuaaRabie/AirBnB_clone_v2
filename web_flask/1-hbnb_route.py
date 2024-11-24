@@ -4,6 +4,7 @@ from flask import Flask
 
 
 app = Flask(__name__)
+app.config['strict_slashes'] = False
 
 
 @app.route('/', strict_slashes=False)
@@ -12,7 +13,7 @@ def Hello():
 
 
 @app.route('/hbnb', strict_slashes=False)
-def Hello_hbnb():
+def hbnb():
     return "HBNB!"
 
 
