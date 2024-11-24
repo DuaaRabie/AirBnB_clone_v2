@@ -31,8 +31,11 @@ def python(text="is cool"):
 
 @app.route('/number/<n>', strict_slashes=False)
 def number(n):
-    if isinstance(n, int):
+    try:
+        int(n)
         return f"{n} is a number"
+    except ValueError:
+        return "Not a number", 400
 
 
 if __name__ == '__main__':
