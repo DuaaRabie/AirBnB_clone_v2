@@ -16,7 +16,7 @@ class FileStorage():
             if cls is None or val.__class__ == cls:
                 result[key] = val
         return result
-    
+
     def new(self, obj):
         """Adds new object to storage dictionary"""
         key = str(obj.__class__.__name__) + "." + str(obj.id)
@@ -56,5 +56,4 @@ class FileStorage():
         if obj is not None:
             key = str(obj.__class__.__name__) + "." + str(obj.id)
             if key in self.__objects:
-                del self.__objects[key]
-            
+                del self.__objects[key]        

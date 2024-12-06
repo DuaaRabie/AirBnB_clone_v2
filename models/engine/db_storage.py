@@ -3,10 +3,9 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy.ext.declarative import declarative_base
+from models.base_model import Base
 import os
 
-
-Base = declarative_base()
 
 class DBStorage:
     """ DBStorage"""
@@ -15,12 +14,6 @@ class DBStorage:
 
     def __init__(self):
         """Initialize the engine and session"""
-        self.__engine = self._get_engine()
-        self.__session = scoped_session(sessionmaker(bind=self.__engine, expire_on_commit=False))
-        
-    @staticmethod
-    def _get_engine():
-        """ Create the engine linked to the MySQL database """
         user = os.getenv('HBNB_MYSQL_USER', 'hbnb_dev')
         pwd = os.getenv('HBNB_MYSQL_PWD', 'hbnb_dev_pwd')
         host = os.getenv('HBNB_MYSQL_HOST', 'localhost')
@@ -29,21 +22,23 @@ class DBStorage:
         dialect = 'mysql'
         driver = 'mysqldb'
         options = {'pool_pre_ping': True}
-
-        if os.getenv('HBNB_ENV', '') == 'test':
-            options['drop_all'] = True
-        
         db_uri = f'{dialect}+{driver}://{user}:{pwd}@{host}/{db}'
-        engine = create_engine(db_uri, echo=True, **options)
-        return engine
+        self.__engine = create_engine(db_uri, echo=True, **options)
+
+        if os.getenv('HBNB_ENV') == 'test':
+            Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
         """ This function query on the current db session"""
         if cls is None:
-            return {cls.__name__: obj for cls in Base._decl_class_registry.values() for obj in self.__session.query(cls)}
+            objs = self.__session.query(
+                User, State, City, Amenity, Place, Review).all()
         else:
-            return {obj.id: obj for obj in self.__session.query(cls)}
-        
+            objs = self.__session.query(cls).all()
+        result = {}
+        for obj in objs:
+            result[f"{obj.__class__.__name__}.{obj.id}"] = obj
+
     def new(self, obj):
         """Add the object to the current database session."""
         self.__session.add(obj)
@@ -58,11 +53,15 @@ class DBStorage:
             self.__session.delete(obj)
             self.save()
 
-    @classmethod
-    def reload(cls):
-        """Create all tables in the database and create the current database session."""
-        if cls.__engine is not None:
-            cls._get_engine().dispose()
-        cls.__engine = cls._get_engine()
-        Base.metadata.create_all(cls.__engine)
-        cls.__session = scoped_session(sessionmaker(bind=cls.__engine, expire_on_commit=False))
+    def reload(self):
+        """Create all tables in the database and
+        create the current database session."""
+        from models.user import User
+        from models.state import State
+        from models.city import City
+        from models.amenity import Amenity
+        from models.place import Place
+        from models.review import Review
+        Base.metadata.create_all(self.__engine)
+        self.__session = scoped_session(
+                sessionmaker(bind=cls.__engine, expire_on_commit=False))

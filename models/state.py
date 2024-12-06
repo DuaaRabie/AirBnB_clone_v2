@@ -3,10 +3,8 @@
 from sqlalchemy import Column, String, ForeignKey, Integer
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
-from models.base_model import BaseModel
+from models.base_model import BaseModel, Base
 
-
-Base = declarative_base()
 
 class State(BaseModel, Base):
     """ State class 
@@ -22,12 +20,12 @@ class State(BaseModel, Base):
     longitude = 0.0
     amenity_ids = []"""
     __tablename__ = "states"
+
     id = Column(Integer, primary_key=True)
     name = Column(String(128), nullable=False)
-    """cities = relationship("City", backref="state", cascade="all, delete-orphan")"""
+    cities = relationship("City", backref="state", cascade="all, delete-orphan")
 
-    def __init__(self, *args, **kwargs):
-        params = {}
-        if kwargs:
-            self.__dict__.update(kwargs)
-        super().__init__()
+    @property
+    def cities(self):
+        """ get cities we could also use get_cities instead of @property """
+        return self.session.query(City).filter_by(state_id=self.id).all()
