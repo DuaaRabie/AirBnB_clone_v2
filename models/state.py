@@ -21,7 +21,6 @@ class State(BaseModel, Base):
     amenity_ids = []"""
     __tablename__ = "states"
 
-    id = Column(Integer, primary_key=True)
     name = Column(String(128), nullable=False)
     cities = relationship("City", backref="state", cascade="all, delete-orphan")
 

@@ -23,21 +23,27 @@ class DBStorage:
         driver = 'mysqldb'
         options = {'pool_pre_ping': True}
         db_uri = f'{dialect}+{driver}://{user}:{pwd}@{host}/{db}'
-        self.__engine = create_engine(db_uri, echo=True, **options)
+        self.__engine = create_engine(db_uri, echo=False, **options)
 
         if os.getenv('HBNB_ENV') == 'test':
             Base.metadata.drop_all(self.__engine)
+        self.reload()
 
     def all(self, cls=None):
         """ This function query on the current db session"""
+        #from models.user import User
+        from models.state import State
+        from models.city import City
         if cls is None:
-            objs = self.__session.query(
-                User, State, City, Amenity, Place, Review).all()
+            objs = []
+            for model in [State, City]:
+                objs += self.__session.query(model).all()
         else:
             objs = self.__session.query(cls).all()
         result = {}
         for obj in objs:
             result[f"{obj.__class__.__name__}.{obj.id}"] = obj
+        return result
 
     def new(self, obj):
         """Add the object to the current database session."""
@@ -64,4 +70,4 @@ class DBStorage:
         from models.review import Review
         Base.metadata.create_all(self.__engine)
         self.__session = scoped_session(
-                sessionmaker(bind=cls.__engine, expire_on_commit=False))
+                sessionmaker(bind=self.__engine, expire_on_commit=False))
