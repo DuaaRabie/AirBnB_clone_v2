@@ -14,6 +14,7 @@ class City(BaseModel, Base):
     state_id = Column(String(60), ForeignKey('states.id'), nullable=False)
 
     def __init__(self, *arg, **kwargs):
+        params = {}
         if kwargs:
             self.__dict__.update(kwargs)
         super().__init__()
