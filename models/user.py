@@ -21,3 +21,8 @@ class User(BaseModel, Base):
     def password(self):
         """ getter for password """
         return self._password.replace("_", " ")
+
+    @password.setter
+    def password(self, value):
+        """ setter for password """
+        self._password = value.replace(" ", "_")
