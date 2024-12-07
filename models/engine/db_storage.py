@@ -36,7 +36,7 @@ class DBStorage:
         from models.city import City
         from models.user import User
         from models.place import Place
-        from modesl.review import Review
+        from models.review import Review
         if cls is None:
             objs = []
             for model in [State, City, User, Place, Review]:
