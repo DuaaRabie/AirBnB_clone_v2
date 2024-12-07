@@ -2,10 +2,10 @@
 """ Place Module for HBNB project """
 from sqlalchemy import Column, String, Integer, Float, ForeignKey
 from sqlalchemy.orm import relationship
-from models.base_model import BaseModel
+from models.base_model import BaseModel, Base
 
 
-class Place(BaseModel):
+class Place(BaseModel, Base):
     """ A place to stay """
     __tablename__ = "places"
 

@@ -133,7 +133,7 @@ class HBNBCommand(cmd.Cmd):
             instance.save()
             print(instance.id)
         except Exception as e:
-            print("couldn't create")
+            print(e)
             return
 
     def help_create(self):
