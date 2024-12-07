@@ -21,8 +21,6 @@ class Place(BaseModel):
     longitude = Column(Float, nullable=True)
 
     def __init__(self, *args, **kwargs):
-        self.city_id = ""
-        self.user_id = ""
         if kwargs:
             self.__dict__.update(kwargs)
         super().__init__()
