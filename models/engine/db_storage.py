@@ -35,9 +35,10 @@ class DBStorage:
         from models.state import State
         from models.city import City
         from models.user import User
+        from models.place import Place
         if cls is None:
             objs = []
-            for model in [State, City, User]:
+            for model in [State, City, User, Place]:
                 objs += self.__session.query(model).all()
         else:
             objs = self.__session.query(cls).all()
