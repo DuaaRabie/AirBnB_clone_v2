@@ -20,6 +20,8 @@ class Place(BaseModel, Base):
     latitude = Column(Float, nullable=True)
     longitude = Column(Float, nullable=True)
 
+    reviews = relationship("Review", back_populates="place", cascade="all, delete-orphan")
+
     def __init__(self, *args, **kwargs):
         if kwargs:
             self.__dict__.update(kwargs)
