@@ -128,6 +128,10 @@ class HBNBCommand(cmd.Cmd):
             if '=' in args[i]:
                 key, value = args[i].split('=', 1)
                 params[key] = eval(value)
+        if class_name == "City":
+            instance = globals()[class_name]()
+            print(instance.id)
+            return
         try:
             instance = globals()[class_name](**params)
             instance.save()
