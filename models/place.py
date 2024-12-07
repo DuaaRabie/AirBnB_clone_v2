@@ -1,13 +1,13 @@
 #!/usr/bin/python3
 """ Place Module for HBNB project """
-from sqlalchemy import Column, String
+from sqlalchemy import Column, String, Integer, Float, ForeignKey
 from sqlalchemy.orm import relationship
 from models.base_model import BaseModel
 
 
 class Place(BaseModel):
     """ A place to stay """
-    __tablename__ = places
+    __tablename__ = "places"
 
     city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
     user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
