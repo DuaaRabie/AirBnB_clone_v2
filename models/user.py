@@ -20,7 +20,7 @@ class User(BaseModel, Base):
     @property
     def password(self):
         """ getter for password """
-        return self._password.replace("_", " ")
+        return self._password
 
     @password.setter
     def password(self, value):
